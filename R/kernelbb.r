@@ -119,6 +119,22 @@
 liker <- function (tr, rangesig1, sig2, le=1000,
                    byburst = FALSE, plotit=TRUE)
 {
+
+    locchecktz <- function(x)
+    {
+        if (!inherits(x, "ltraj"))
+            stop("x should be of class \"ltraj\"")
+        tz <- lapply(x, function(y) attr(y$date, "tzone"))
+        atz <- all(sapply(1:length(tz), function(i) identical(tz[[i]],tz[[1]])))
+        if (!atz)
+            stop("multiple time zones not allowed in objects of class ltraj")
+        if (is.null(tz[[1]]))
+            return("")
+        if (tz[[1]]=="")
+            return("")
+        return(tz[[1]])
+    }
+
     locltraj2traj <- function(x)
     {
         if (!inherits(x, "ltraj"))
@@ -130,7 +146,7 @@ liker <- function (tr, rangesig1, sig2, le=1000,
         burst <- factor(unlist(lapply(x, function(y)
             id <- rep(attr(y,"burst"), nrow(y)))))
         if (attr(x,"typeII"))
-            tz <- .checktz(x)
+            tz <- locchecktz(x)
         if (!is.null(infolocs(x)))
             infol <- do.call("rbind", infolocs(x))
         res <- do.call("rbind", x)
