@@ -433,7 +433,8 @@ For example, to identify the pixels enclosed in the home range of the
 second animal:
 
 <<>>=
-enc <- over(puechabonsp$map, cp[,2], fn=function(x) return(1))
+enc <- over(puechabonsp$map, as(cp[2,],"SpatialPolygons"), fn=function(x) return(1))
+enc <- as.data.frame(enc)
 head(enc)
 @
 
