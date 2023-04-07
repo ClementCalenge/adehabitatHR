@@ -17,7 +17,7 @@ the {\tt adehabitatHR} Package }
   Office national de la classe et de la faune
   sauvage\\
   Saint Benoist -- 78610 Auffargis -- France.}
-\date{Mar 2019}
+\date{Apr 2023}
 
 \begin{document}
 
@@ -257,9 +257,9 @@ class(clu2[[2]])
 @
 
 Although each \texttt{SpatialPolygonsDataFrame} of the list can be
-easily handled by the functions of the package \texttt{sp} and
-relatives (\texttt{maptools}, etc.), the package \texttt{adehabitatHR} also
-contains functions allowing to deal with such lists.  For example:
+easily handled by the functions of the package \texttt{sp}, the
+package \texttt{adehabitatHR} also contains functions allowing to deal
+with such lists.  For example:
 
 <<label=fig2,echo=FALSE,fig=FALSE,eval=FALSE>>=
 plot(clu2)
@@ -377,7 +377,7 @@ class(cp)
 @
 
 Therefore the functions available in the package \texttt{sp} and
-related packages (\texttt{maptools}, etc.) are available to deal with
+related packages (\texttt{sf}, etc.) are available to deal with
 these objects.  For example, the function \texttt{plot}:
 
 
@@ -398,17 +398,17 @@ plot(puechabonsp$relocs, add=TRUE)
 @
 \end{center}
 
-Similarly, the function \texttt{writePolyShape} from the package
-\texttt{maptools} can be used to export the object \texttt{cp} to a
-shapefile, so that it can be read into a GIS:
+Similarly, the function \texttt{st\_write} from the package \texttt{sf}
+can be used to export the object \texttt{cp} to a shapefile (after
+conversion to the class sf), so that it can be read into a GIS:
 
 
 <<>>=
-library(maptools)
+library(sf)
 @
 
 <<eval=FALSE>>=
-writePolyShape(cp, "homerange")
+st_write(st_as_sf(cp), "homerange.shp")
 @
 
 The resulting shapefils can be read in any GIS.
@@ -1039,7 +1039,7 @@ class(homerange)
 The resulting object is of the class
 \texttt{SpatialPolygonsDataFrame}.  Therefore, as for the MCP (see
 previous section), the functions of the package \texttt{sp} and
-\texttt{maptools} are available to deal with this object, or to export
+\texttt{sf} are available to deal with this object, or to export
 it toward a GIS (see section 3.2 for examples).  Therefore, to display
 the home range:
 
@@ -2557,11 +2557,7 @@ functions \texttt{LoCoH.k}, \texttt{LoCoH.r} and \texttt{LoCoH.a}):\\
   function \texttt{LoCoH.a};\\
 \end{itemize}
 
-All of these algorithms can take a significant amount of time.\\
-
-\noindent \textit{Note}: these functions rely on the availability of
-the packages rgeos and gpclib, which may not be available for all OS
-(especially MacOS).
+All of these algorithms can take a significant amount of time.
 
 
 \subsection{Example with the Fixed k LoCoH method}
